@@ -1,0 +1,8 @@
+{
+  "expoServerPort": 19002,
+  "expoServerNgrokUrl": "https://kt-r63.balek91.todolist.exp.direct",
+  "packagerNgrokUrl": "https://packager.kt-r63.balek91.todolist.exp.direct",
+  "ngrokPid": 60443,
+  "packagerPort": 19003,
+  "packagerPid": 60427
+}
