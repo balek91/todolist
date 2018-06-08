@@ -44,11 +44,9 @@ export default class HomeScreen extends React.Component {
   }
 
   async handlePress(id) {
-    console.log(id);
-
-    // this.props.navigation.navigate('Item',{
-    //   id: id
-    // });
+    this.props.navigation.navigate('Item',{
+      id: id
+    });
   }
   render() {
     let { posts } = this.state
