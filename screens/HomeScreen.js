@@ -59,7 +59,7 @@ export default class HomeScreen extends React.Component {
     let { posts } = this.state
     return (
       <ScrollView style={{ flex: 1 }}>
-        <Button title='New ToDo' onPress={() => this.handlePress()}></Button>
+        <Button title='New ToDo' onPress={() => this.handlePressNew()}></Button>
         {
           posts.map((item, index) => {
             if (item.isDone === true) {
