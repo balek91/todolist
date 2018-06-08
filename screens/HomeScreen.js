@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  RefreshControl,
   Button,
 } from 'react-native';
 import axios from 'axios';
@@ -21,9 +22,11 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
+    this.reload = this.reload.bind(this);
     this.state = {
       posts: [],
-      isLoading: true
+      isLoading: true,
+      refreshing : false,
     }
   }
 
@@ -33,6 +36,23 @@ export default class HomeScreen extends React.Component {
       textAlign: 'left'
     }
   };
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.reload().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
+async reload(){
+  axios.get('http://formation-roomy.inow.fr/api/todoitems',{ headers: {
+    'Authorization': 'Bearer UvEKE5U6FX8Iwdc9PBCYqsVuvNbFskPHdC-tDAkOlMV4Bgv8E7umAJVtNBwpjWSEFiZ9dyeqVkJfyXp8Ma-1G631JHzxhdKWoWcvxP7Mzun_iyDPPhRlkVDTuHAEnBbUjI44GxSDBZY-n_KRT8zBxSZhVIkHFAyjqHPPjEn7NT7sq-rgOGzVIkfFforMDqVuLfZvIMfsoZ1WppbXxgH7QsdfKyY4HGTq3SncUytXlzE',
+}})
+    .then(response => this.setState({
+      posts: response.data,
+      isLoading: false
+    }));
+}
 
   componentDidMount() {
     axios.get('http://formation-roomy.inow.fr/api/todoitems',{ headers: {
@@ -58,7 +78,13 @@ export default class HomeScreen extends React.Component {
  render() {
     let { posts } = this.state
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }} 
+      refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }>
         <Button title='New ToDo' onPress={() => this.handlePressNew()}></Button>
         {
           posts.map((item, index) => {
