@@ -7,10 +7,12 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import ItemDetail from '../screens/ItemDetail';
+import NewItem from '../screens/NewItem';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Item : ItemDetail,
+  Create : NewItem,
 });
 
 HomeStack.navigationOptions = {

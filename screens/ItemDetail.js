@@ -28,7 +28,7 @@ export default class SettingsScreen extends React.Component {
       description : null,
       doneDate : null,
       isDone  : false,
-      createDate : null,
+      createdDate : null,
       priority : null,
       isLoading: true
     }
@@ -52,7 +52,7 @@ export default class SettingsScreen extends React.Component {
         description : response.data.description,
         doneDate : response.data.doneDate,
         isDone : response.data.isDone,
-        createDate : response.data.createDate,
+        createdDate : response.data.createdDate,
         priority : response.data.priority,
         isLoading: false
       }));
@@ -70,7 +70,7 @@ export default class SettingsScreen extends React.Component {
     let body = {
       id: this.state.id,
       text: this.state.text,
-      createdDate: this.state.createDate,
+      createdDate: this.state.createdDate,
       description: this.state.description,
       isDone: true,
       doneDate: this.state.doneDate,
@@ -81,8 +81,9 @@ console.log(body);
       headers: {
         'Authorization': 'Bearer UvEKE5U6FX8Iwdc9PBCYqsVuvNbFskPHdC-tDAkOlMV4Bgv8E7umAJVtNBwpjWSEFiZ9dyeqVkJfyXp8Ma-1G631JHzxhdKWoWcvxP7Mzun_iyDPPhRlkVDTuHAEnBbUjI44GxSDBZY-n_KRT8zBxSZhVIkHFAyjqHPPjEn7NT7sq-rgOGzVIkfFforMDqVuLfZvIMfsoZ1WppbXxgH7QsdfKyY4HGTq3SncUytXlzE',
       }}
-    ) .then(response => console.log(response)
-    );
+    )       .then(response => this.setState({
+      isDone : true, 
+    }));
   }
 
   render() {

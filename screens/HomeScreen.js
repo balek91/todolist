@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button,
 } from 'react-native';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -48,10 +49,17 @@ export default class HomeScreen extends React.Component {
       id: id
     });
   }
-  render() {
+
+  async handlePressNew()
+{
+  this.props.navigation.navigate('Create');
+
+} 
+ render() {
     let { posts } = this.state
     return (
       <ScrollView style={{ flex: 1 }}>
+        <Button title='New ToDo' onPress={() => this.handlePress()}></Button>
         {
           posts.map((item, index) => {
             if (item.isDone === true) {
