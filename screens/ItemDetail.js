@@ -1,40 +1,23 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  FlatList,
-  ListItem,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-import { Ionicons } from '@expo/vector-icons';
-import { StackNavigator } from 'react-navigation';
+import { ExpoConfigView } from '@expo/samples';
 
-export default class HomeScreen extends React.Component {
+export default class SettingsScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Detail Item',
+  };
 
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
     this.state = {
-      posts: [],
+      id : null,
+      info: null,
       isLoading: true
     }
   }
 
-  static navigationOptions = {
-    title: 'Ma Liste',
-    headerTitleStyle: {
-      textAlign: 'left'
-    }
-  };
-
   componentDidMount() {
-    axios.get('http://formation-roomy.inow.fr/api/todoitems',{ headers: {
+    axios.get('http://formation-roomy.inow.fr/api/todoitems/'+this.state.id,{ headers: {
       'Authorization': 'Bearer UvEKE5U6FX8Iwdc9PBCYqsVuvNbFskPHdC-tDAkOlMV4Bgv8E7umAJVtNBwpjWSEFiZ9dyeqVkJfyXp8Ma-1G631JHzxhdKWoWcvxP7Mzun_iyDPPhRlkVDTuHAEnBbUjI44GxSDBZY-n_KRT8zBxSZhVIkHFAyjqHPPjEn7NT7sq-rgOGzVIkfFforMDqVuLfZvIMfsoZ1WppbXxgH7QsdfKyY4HGTq3SncUytXlzE',
   }})
       .then(response => this.setState({
@@ -43,13 +26,6 @@ export default class HomeScreen extends React.Component {
       }));
   }
 
-  async handlePress(id) {
-    console.log(id);
-
-    // this.props.navigation.navigate('Item',{
-    //   id: id
-    // });
-  }
   render() {
     let { posts } = this.state
     return (
@@ -57,9 +33,8 @@ export default class HomeScreen extends React.Component {
         {
           posts.map((item, index) => {
             if (item.isDone === true) {
-              let id = item.id;
               return (
-                <TouchableOpacity key={item.id} onPress={() => this.handlePress({id})} style={{ borderWidth: 0.5, borderColor: '#d6d7da' }}>
+                <TouchableOpacity key={index} onPress={this.handlePress} style={{ borderWidth: 0.5, borderColor: '#d6d7da' }}>
                   <Text key={index+'text'} style={{ fontSize: 30 }}>{item.text}</Text>
                   <Text key={index+'desc'} style={{ fontSize: 15 }}>{item.description}</Text>
                   <Ionicons style={{textAlign : 'right'}} name="md-checkmark-circle" size={32} color="green" />
@@ -67,9 +42,8 @@ export default class HomeScreen extends React.Component {
               )
             }
             else {
-              let id = item.id;
               return(
-              <TouchableOpacity key={item.id} onPress={() => this.handlePress({id})} style={{ borderWidth: 0.5, borderColor: '#d6d7da' }}>
+              <TouchableOpacity key={index} onPress={this.handlePress} style={{ borderWidth: 0.5, borderColor: '#d6d7da' }}>
                   <Text key={index+'text'} style={{ fontSize: 30 }}>{item.text}</Text>
                   <Text key={index+'desc'} style={{ fontSize: 15 }}>{item.description}</Text>
               </TouchableOpacity>
@@ -78,14 +52,6 @@ export default class HomeScreen extends React.Component {
           })
         }
       </ScrollView>
-    );
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
